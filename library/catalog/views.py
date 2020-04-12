@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import HttpResponse, render
 
-# Create your views here.
+
+def catalog_home(request):
+    return HttpResponse("Hello Catalog!")
+
