@@ -32,5 +32,3 @@ urlpatterns = [
 ]
 urlpatterns += APPS_PATTERNS
 urlpatterns += STATIC_PATTERN
-
-
