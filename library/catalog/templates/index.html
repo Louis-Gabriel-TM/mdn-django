@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+  Accueil catalogue
+{% endblock title %}
+
+{% block content %}
+
+  <h1>MDN Local Library Home</h1>
+
+  <p>Bienvenue sur la Local Library, un site développé par <em>Mozilla Developer Network</em>!</p>
+
+  <h4>La bibliothèque compte actuellement :</h4>
+
+  <ul>
+    <li><strong>{{ authors_count }}</strong> auteurs</li>
+    <li><strong>{{ books_count }}</strong> livres référencés</li>
+    <li><strong>{{ instances_count }}</strong> exemplaires</li>
+    <li><strong>{{ available_instances_count }}</strong> exemplaires disponibles</li>
+  </ul>
+
+{% endblock content %}
