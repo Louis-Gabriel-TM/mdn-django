@@ -8,19 +8,27 @@ class Author(models.Model):
     
     first_name = models.CharField(
         max_length=100,
+        verbose_name="prénom"
     )
     last_name = models.CharField(
         max_length=100,
+        verbose_name="nom",
     )
     date_of_birth = models.DateField(
         null=True, blank=True,
+        verbose_name="date de naissance",
     )
     date_of_death = models.DateField(
-        "Died", null=True, blank=True,
+        null=True, blank=True,
+        verbose_name="date de décès",
     )
 
+
     class Meta:
+
+        verbose_name = "Auteur"
         ordering = ['last_name', 'first_name']
+
 
     def get_absolute_url(self):
         return reverse('author-detail', args=[str(self.pk)])
@@ -45,7 +53,14 @@ class Language(models.Model):
     name = models.CharField(
         max_length=100, default="français",
         help_text="Entrez la langue dans laquelle est écrit le livre",
+        verbose_name="langue",
     )
+
+
+    class Meta:
+
+        verbose_name = "Langue"
+
 
     def __str__(self):
         return self.name
@@ -55,13 +70,16 @@ class Book(models.Model):
 
     title = models.CharField(
         max_length=200,
+        verbose_name="titre",
     )
     author = models.ForeignKey(
         'Author', on_delete=models.SET_NULL, null=True,
+        verbose_name="auteur",
     )
     summary = models.TextField(
         max_length=1000,
         help_text="Entrez un bref résumé du livre",
+        verbose_name="résumé",
     )
     isbn = models.CharField(
         "ISBN", max_length=13,
@@ -73,13 +91,25 @@ class Book(models.Model):
     )
     language = models.ForeignKey(
         'Language', on_delete=models.SET_NULL, null=True,
+        verbose_name="langue",
     )
+
+
+    class Meta:
+
+        verbose_name = "Livre"
+
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.pk)])
+
+    def display_genre(self):
+        return ", ".join(genre.name for genre in self.genre.all()[:3])
+
+    display_genre.short_description = "genre(s)"
 
 
 class BookInstance(models.Model):
@@ -90,27 +120,34 @@ class BookInstance(models.Model):
     )
     book = models.ForeignKey(
         'Book', on_delete=models.SET_NULL, null=True,
+        verbose_name="livre",
     )
     imprint = models.CharField(
         max_length=200,
     )
     due_back = models.DateField(
         null=True, blank=True,
+        verbose_name="date de retour",
     )
 
     LOAN_STATUS = (
-        ('m', "Maintenace"),
-        ('o', "On loan"),
-        ('a', "Available"),
-        ('r', "Reserved"),
+        ('m', "En maintenance"),
+        ('o', "Loué"),
+        ('a', "Disponible"),
+        ('r', "Réservé"),
     )
     status = models.CharField(
         max_length=1, choices=LOAN_STATUS, blank=True, default='m',
         help_text="Disponibilité de l'exemplaire",
+        verbose_name="statut",
     )
 
+
     class Meta:
+
+        verbose_name = "Exemplaire"
         ordering = ['due_back']
 
+
     def __str__(self):
-        return f"{self.uuid} - {self.book.title}"
+        return f"{self.imprint} - {self.book.title}"
