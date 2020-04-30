@@ -23,7 +23,6 @@ class Author(models.Model):
         verbose_name="date de décès",
     )
 
-
     class Meta:
 
         verbose_name = "Auteur"
@@ -55,7 +54,6 @@ class Language(models.Model):
         help_text="Entrez la langue dans laquelle est écrit le livre",
         verbose_name="langue",
     )
-
 
     class Meta:
 
@@ -93,7 +91,6 @@ class Book(models.Model):
         'Language', on_delete=models.SET_NULL, null=True,
         verbose_name="langue",
     )
-
 
     class Meta:
 
@@ -141,7 +138,6 @@ class BookInstance(models.Model):
         help_text="Disponibilité de l'exemplaire",
         verbose_name="statut",
     )
-
 
     class Meta:
 

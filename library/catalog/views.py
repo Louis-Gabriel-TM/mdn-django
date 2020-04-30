@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from django.views import generic
 
 from .models import Author, Book, BookInstance, Genre, Language
 
 
 
 def index(request):
+
     authors_count = Author.objects.all().count()
     books_count = Book.objects.all().count()
     instances_count = BookInstance.objects.all().count()
@@ -19,3 +21,19 @@ def index(request):
     }
 
     return render(request, 'index.html', context=context)
+
+
+class BookListView(generic.ListView):
+
+    model = Book
+
+    def get_queryset(self):
+
+        return Book.objects.all()[:5]
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['additional_data'] = "Une donnée supplémentaire"
+
+        return context
