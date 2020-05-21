@@ -26,7 +26,7 @@ def index(request):
 class BookListView(generic.ListView):
 
     model = Book
-    paginate_by = 3
+    paginate_by = 2
 
     def get_queryset(self):
 
@@ -35,7 +35,7 @@ class BookListView(generic.ListView):
     def get_context_data(self, **kwargs):
 
         context = super().get_context_data(**kwargs)
-        context['additional_data'] = "Une donnée supplémentaire"
+        # context['additional_data'] = "Une donnée supplémentaire"
 
         return context
 
@@ -43,3 +43,14 @@ class BookListView(generic.ListView):
 class BookDetailView(generic.DetailView):
 
     model = Book
+
+
+class AuthorListView(generic.ListView):
+
+    model = Author
+    paginate_by = 2
+
+    def query_set(self):
+
+        return Author.objects.all()[:5]
+
