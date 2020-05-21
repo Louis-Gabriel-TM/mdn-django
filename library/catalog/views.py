@@ -26,6 +26,7 @@ def index(request):
 class BookListView(generic.ListView):
 
     model = Book
+    paginate_by = 3
 
     def get_queryset(self):
 
@@ -37,3 +38,8 @@ class BookListView(generic.ListView):
         context['additional_data'] = "Une donnée supplémentaire"
 
         return context
+
+
+class BookDetailView(generic.DetailView):
+
+    model = Book

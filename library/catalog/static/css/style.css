@@ -1,6 +1,27 @@
-.sidebar-nav {
-    margin-top: 20px;
-    padding: 0;
+h1 {
+  margin-bottom: 32px;
+}
 
-    list-style: none;
+/* ================
+   COMPONENTS BOXES
+   ================ */
+.content-wrapper {
+  width: 100%;
+  max-width: 1024px;
+  margin: 32px auto;
+}
+
+.sidebar-nav {
+  margin-top: 8px;
+  padding: 0;
+
+  list-style: none;
+}
+
+.current-page {
+  padding: 0 32px;
+}
+
+.page-links {
+  margin: 16px auto;
 }

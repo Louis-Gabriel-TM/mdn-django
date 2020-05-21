@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <h1>{{ book.title }}</h1>
+
+  <ul>
+    <li><strong>Auteur :</strong> <a href="">{{ book.author }}</a></li>
+    <li><strong>Résumé :</strong> {{ book.summary }}</li>
+    <li><strong>ISBN :</strong> {{ book.isbn }}</li>
+    <li><strong>Langue :</strong> {{ book.language }}</li>
+    <li><strong>Genre :</strong> {{ book.genre.all|join:", " }}</li>
+  </ul>
+
+  <aside>
+    <h4>Exemplaires</h4>
+
+    {% for copy in book.bookinstance_set.all %}
+
+      <hr />
+
+      <p class="{% if copy.status == 'a' %}text-success{% else %}text-danger{% endif %}">
+        {{ copy.get_status_display }}
+      </p> 
+
+      {% if copy.status != 'a' %}
+        <p><strong>Doit être retourné</strong> le {{ copy.due_back }}</p>
+      {% endif %}
+
+      <p><strong>Code référence :</strong> {{ copy.imprint }}</p>
+
+      <p class="text-muted"><strong>UUID :</strong> {{ copy.uuid }}</p>
+
+    {% endfor %}
+  </aside>
+  
+{% endblock content %}
