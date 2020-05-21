@@ -54,3 +54,7 @@ class AuthorListView(generic.ListView):
 
         return Author.objects.all()[:5]
 
+
+class AuthorDetailView(generic.DetailView):
+
+    model = Author

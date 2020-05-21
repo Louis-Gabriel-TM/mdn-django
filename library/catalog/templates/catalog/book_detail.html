@@ -6,7 +6,11 @@
   <h1>{{ book.title }}</h1>
 
   <ul>
-    <li><strong>Auteur :</strong> <a href="">{{ book.author }}</a></li>
+    <li><strong>Auteur : </strong>
+      <a href="{{ book.author.get_absolute_url }}">
+        {{ book.author }}
+      </a>
+    </li>
     <li><strong>Résumé :</strong> {{ book.summary }}</li>
     <li><strong>ISBN :</strong> {{ book.isbn }}</li>
     <li><strong>Langue :</strong> {{ book.language }}</li>
@@ -22,7 +26,7 @@
 
       <p class="{% if copy.status == 'a' %}text-success{% else %}text-danger{% endif %}">
         {{ copy.get_status_display }}
-      </p> 
+      </p>
 
       {% if copy.status != 'a' %}
         <p><strong>Doit être retourné</strong> le {{ copy.due_back }}</p>

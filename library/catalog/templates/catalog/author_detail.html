@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <h1>{{ author }}</h1>
+
+  <h4 class="text-muted">
+    {% if author.date_of_birth %}{{ author.date_of_birth }}{% endif %}{% if authot.date_of_death %} - {{ author.date_of_death }}{% endif %}
+  </h4>
+
+  <hr />
+
+  <aside>
+    <h3>Oeuvres</h3>
+
+    {% for book in author.book_set.all %}
+
+      <br />
+
+      <h5><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h5>
+      <h6><strong>{{ book.bookinstance_set.count }}</strong> exemplaire(s)</h6>
+
+      <p>{{ book.summary }}</p>
+
+    {% endfor %}
+  </aside>
+
+{% endblock content %}
