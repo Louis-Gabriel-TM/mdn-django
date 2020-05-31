@@ -22,6 +22,7 @@ from django.views.generic import RedirectView
 
 
 APPS_PATTERNS = [
+    path('accounts/', include('django.contrib.auth.urls')),
     path('catalog/', include('catalog.urls')),
 ]
 STATIC_PATTERN = static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
