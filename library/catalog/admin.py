@@ -46,7 +46,7 @@ class BookAdmin(admin.ModelAdmin):
 class BookInstanceAdmin(admin.ModelAdmin):
 
     list_display = (
-        'book', 'imprint', 'status', 'due_back',
+        'book', 'imprint', 'status', 'due_back', 'borrower',
     )
     list_filter = (
         'status', 'due_back',
@@ -56,7 +56,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
             'fields': ('book', 'imprint', 'uuid',),
         }),
         ("Disponibilité", {
-            'fields': ('status', 'due_back',),
+            'fields': ('status', 'due_back', 'borrower',),
         }),
     )
 
