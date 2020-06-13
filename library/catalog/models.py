@@ -135,7 +135,7 @@ class BookInstance(models.Model):
 
     LOAN_STATUS = (
         ('m', "En maintenance"),
-        ('o', "Loué"),
+        ('o', "Emprunté"),
         ('a', "Disponible"),
         ('r', "Réservé"),
     )

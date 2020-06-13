@@ -35,6 +35,7 @@
               <hr />
               {% if user.is_authenticated %}
                 <li>Bonjour {{ user.get_username }}</li>
+                <li><a href="{% url 'my-borrowed' %}">Mes emprunts</a></li>
                 <li><a href="{% url 'logout' %}?next={{ request.path }}">Se déconnecter</a></li>
               {% else %}
                 <li><a href="{% url 'login' %}?next={{ request.path }}">Se connecter</a></li>
