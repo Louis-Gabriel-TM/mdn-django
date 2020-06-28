@@ -35,6 +35,9 @@
               <hr />
               {% if user.is_authenticated %}
                 <li>Bonjour {{ user.get_username }}</li>
+                {% if perms.catalog.can_mark_returned %}
+                  <li><a href="{% url 'borrowed' %}">Livres empruntés</a></li>
+                {% endif %}
                 <li><a href="{% url 'my-borrowed' %}">Mes emprunts</a></li>
                 <li><a href="{% url 'logout' %}?next={{ request.path }}">Se déconnecter</a></li>
               {% else %}

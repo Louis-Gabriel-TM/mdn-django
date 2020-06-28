@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <h1>Livres empruntés</h1>
+
+  {% if bookinstance_list %}
+
+    <ul>
+      {% for bookinstance in bookinstance_list %}
+        <li>
+          <a class="{% if bookinstance.is_overdue %}text-danger{% endif %}" 
+             href="{% url 'book-detail' bookinstance.book.pk %}">
+            {{ bookinstance.book.title }} [{{ bookinstance.imprint }}]
+          </a>
+          {% if bookinstance.is_overdue %}
+            - devait être ramené avant le {{ bookinstance.due_back }} par
+            <span class="text-danger"> {{ bookinstance.borrower }}</span>
+          {% else %}
+            - à ramener avant le {{ bookinstance.due_back }} par {{ bookinstance.borrower }}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  
+  {% else %}
+
+    <p>Aucune livre emprunté actuellement.</p>
+
+  {% endif %}
+
+{% endblock content %}

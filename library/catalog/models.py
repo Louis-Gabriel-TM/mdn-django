@@ -156,6 +156,9 @@ class BookInstance(models.Model):
 
         verbose_name = "Exemplaire"
         ordering = ['due_back']
+        permissions = (
+            ('can_mark_returned', 'Indiquer un exemplaire comme rapporté'),
+        )
 
 
     def __str__(self):
