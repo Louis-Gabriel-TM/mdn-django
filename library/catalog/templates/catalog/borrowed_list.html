@@ -20,13 +20,16 @@
           {% else %}
             - à ramener avant le {{ bookinstance.due_back }} par {{ bookinstance.borrower }}
           {% endif %}
+          {% if perms.catalog.can_mark_returned %}
+            <a href="{% url 'renew-book-librarian' bookinstance.uuid %}"> [ changer date ]</a>
+          {% endif %}
         </li>
       {% endfor %}
     </ul>
   
   {% else %}
 
-    <p>Aucune livre emprunté actuellement.</p>
+    <p>Aucun livre emprunté actuellement.</p>
 
   {% endif %}
 
