@@ -10,6 +10,16 @@
       {% for author in author_list %}
         <li>
           <a href="{{ author.get_absolute_url }}">{{ author }}</a>
+          {% if perms.catalog.can_mark_returned %}
+            <a class="btn btn-outline-primary btn-sm" 
+               href="{% url 'author_update' author.pk %}">
+              Modifier
+            </a>
+            <a class="btn btn-outline-danger btn-sm"
+               href="{% url 'author_delete' author.pk %}">
+              Supprimer
+            </a>
+          {% endif %}
         </li>
       {% endfor %}
     </ul>

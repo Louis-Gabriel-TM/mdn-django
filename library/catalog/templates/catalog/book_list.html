@@ -10,6 +10,16 @@
       {% for book in book_list %}
         <li>
           <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>, de {{ book.author }}
+          {% if perms.catalog.can_mark_returned %}
+            <a class="btn btn-outline-primary btn-sm" 
+              href="{% url 'book_update' book.pk %}">
+              Modifier
+            </a>
+            <a class="btn btn-outline-danger btn-sm"
+              href="{% url 'book_delete' book.pk %}">
+              Supprimer
+            </a>
+          {% endif %}
         </li>
       {% endfor %}
     </ul>

@@ -21,7 +21,10 @@
             - à ramener avant le {{ bookinstance.due_back }} par {{ bookinstance.borrower }}
           {% endif %}
           {% if perms.catalog.can_mark_returned %}
-            <a href="{% url 'renew_book_librarian' bookinstance.uuid %}"> [ changer date ]</a>
+            <a class="btn btn-outline-primary" 
+              href="{% url 'renew_book_librarian' bookinstance.uuid %}">
+              changer date
+            </a>
           {% endif %}
         </li>
       {% endfor %}
