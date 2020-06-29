@@ -3,13 +3,16 @@
 
 {% block content %}
 
-  <h1>Supprimer un auteur</h1>
+  <h1>Supprimer un livre</h1>
 
-  <p>Êtes-vous sûr de vouloir supprimer l'auteur <b>{{ author }}</b> ?</p>
+  <p>Êtes-vous sûr de vouloir supprimer le livre <b>{{ book }}</b> ?</p>
 
   <form action="" method="post">
     {% csrf_token %}
 
+    <table>
+      {{ form.as_table }}
+    </table>
     <input class="btn btn-danger" type="submit" value="Oui, supprimer">
   </form>
 
