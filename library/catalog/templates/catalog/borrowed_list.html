@@ -11,7 +11,7 @@
       {% for bookinstance in bookinstance_list %}
         <li>
           <a class="{% if bookinstance.is_overdue %}text-danger{% endif %}" 
-             href="{% url 'book-detail' bookinstance.book.pk %}">
+             href="{% url 'book_detail' bookinstance.book.pk %}">
             {{ bookinstance.book.title }} [{{ bookinstance.imprint }}]
           </a>
           {% if bookinstance.is_overdue %}
@@ -21,7 +21,7 @@
             - à ramener avant le {{ bookinstance.due_back }} par {{ bookinstance.borrower }}
           {% endif %}
           {% if perms.catalog.can_mark_returned %}
-            <a href="{% url 'renew-book-librarian' bookinstance.uuid %}"> [ changer date ]</a>
+            <a href="{% url 'renew_book_librarian' bookinstance.uuid %}"> [ changer date ]</a>
           {% endif %}
         </li>
       {% endfor %}

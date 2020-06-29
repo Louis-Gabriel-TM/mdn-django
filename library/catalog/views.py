@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import (
 )
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from .forms import RenewBookModelForm
@@ -46,7 +46,7 @@ def renew_book_librarian(request, pk):
             book_instance.due_back = form.cleaned_data['renewal_date']
             book_instance.save()
 
-            return HttpResponseRedirect(reverse('all-borrowed'))
+            return HttpResponseRedirect(reverse('all_borrowed'))
 
     else:  # request.method == 'GET' in general
         proposed_renewal_date = datetime.date.today() 
@@ -123,3 +123,35 @@ class LoanedBooksListView(PermissionRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return BookInstance.objects.filter(status__exact='o').order_by('due_back')
+
+
+class AuthorCreate(PermissionRequiredMixin, generic.edit.CreateView):
+
+    permission_required = 'catalog.can_mark_returned'
+    model = Author
+
+    fields ='__all__'
+    initial = {
+        'date_of_death': '01/01/2012',
+    }
+
+
+class AuthorUpdate(PermissionRequiredMixin, generic.edit.UpdateView):
+
+    permission_required = 'catalog.can_mark_returned'
+    model = Author
+
+    fields = [
+        'first_name',
+        'last_name',
+        'date_of_birth',
+        'date_of_death',
+    ]
+
+
+class AuthorDelete(PermissionRequiredMixin, generic.edit.DeleteView):
+
+    permission_required = 'catalog.can_mark_returned'
+    model = Author
+
+    success_url = reverse_lazy('authors')

@@ -35,7 +35,7 @@
               <hr />
               {% if user.is_authenticated %}
                 <li>Bonjour {{ user.get_username }}</li>
-                <li><a href="{% url 'my-borrowed' %}">Mes emprunts</a></li>
+                <li><a href="{% url 'my_borrowed' %}">Mes emprunts</a></li>
                 <li><a href="{% url 'logout' %}?next={{ request.path }}">Se déconnecter</a></li>
               {% else %}
                 <li><a href="{% url 'login' %}?next={{ request.path }}">Se connecter</a></li>
@@ -43,7 +43,7 @@
               {% if perms.catalog.can_mark_returned %}
                 <hr />
                 <li>Equipe</li>
-                <li><a href="{% url 'all-borrowed' %}">Livres empruntés</a></li>
+                <li><a href="{% url 'all_borrowed' %}">Livres empruntés</a></li>
               {% endif %}
             </ul>
           {% endblock sidebar %}
