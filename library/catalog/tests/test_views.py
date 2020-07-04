@@ -50,7 +50,7 @@ class AuthorListViewTest(TestCase):
         self.assertEquals(len(response.context['author_list']), 2)
 
 
-class LoanedBooksByUserListView(TestCase):
+class LoanedBooksByUserListViewTest(TestCase):
 
     def setUp(self):
         test_user_1 = User.objects.create_user(
@@ -68,7 +68,7 @@ class LoanedBooksByUserListView(TestCase):
             first_name="John",
             last_name="Doe",
         )
-        test_genre = Genre.objects.create(
+        Genre.objects.create(
             name="Fantasy",
         )
         test_language = Language.objects.create(
@@ -108,18 +108,6 @@ class LoanedBooksByUserListView(TestCase):
         )
 
     def test_logged_in_uses_correct_template(self):
-        login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
-        response = self.client.get(reverse('my-borrowed'))
-        
-        # Check our user is logged in
-        self.assertEqual(str(response.context['user']), 'testuser1')
-        # Check that we got a response "success"
-        self.assertEqual(response.status_code, 200)
-
-        # Check we used correct template
-        self.assertTemplateUsed(response, 'catalog/bookinstance_list_borrowed_user.html')
-
-    def test_logged_in_uses_correct_template(self):
         self.client.login(
             username="testuser1",
             password='1X<ISRUkw+tuK',
@@ -132,3 +120,57 @@ class LoanedBooksByUserListView(TestCase):
             response, 
             'catalog/bookinstances_list_borrowed_user.html'
         )
+
+    def test_only_borrowed_book_in_list(self):
+        self.client.login(
+            username="testuser1",
+            password='1X<ISRUkw+tuK',
+        )
+        response = self.client.get(reverse('my_borrowed'))
+
+        self.assertEqual(str(response.context['user']), 'testuser1')
+        self.assertEqual(response.status_code, 200)
+
+        self.assertTrue('bookinstance_list' in response.context)
+        self.assertEqual(len(response.context['bookinstance_list']), 0)
+
+        books = BookInstance.objects.all()[:10]
+
+        for book in books:
+            book.status = 'o'
+            book.save()
+
+        response = self.client.get(reverse('my_borrowed'))
+        self.assertEqual(str(response.context['user']), 'testuser1')
+        self.assertEqual(response.status_code, 200)
+
+        self.assertTrue('bookinstance_list' in response.context)
+
+        for bookinstance in response.context['bookinstance_list']:
+            self.assertEqual(response.context['user'], bookinstance.borrower)
+            self.assertEqual(bookinstance.status, 'o')
+
+    def test_pages_ordered_by_due_date(self):
+        for book in BookInstance.objects.all():
+            book.status = 'o'
+            book.save()
+
+        self.client.login(
+            username="testuser1",
+            password='1X<ISRUkw+tuK',
+        )
+        response = self.client.get(reverse('my_borrowed'))
+
+        self.assertEqual(str(response.context['user']), 'testuser1')
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(len(response.context['bookinstance_list']), 3)
+
+        last_date = 0
+        for bookinstance in response.context['bookinstance_list']:
+            if last_date == 0:
+                last_date = bookinstance.due_back
+            else:
+                self.assertTrue(last_date <= book.due_back)
+                last_date = book.due_back
+
