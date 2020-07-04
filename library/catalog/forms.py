@@ -20,7 +20,9 @@ class RenewBookForm(forms.Form):
             raise ValidationError("Date invalide - date passée")
 
         if data > datetime.date.today() + datetime.timedelta(weeks=4):
-            raise ValidationError("Date invalide - date dans plus de 4 semaines")
+            raise ValidationError(
+                "Date invalide - date dans plus de 4 semaines",
+            )
 
         return data
 

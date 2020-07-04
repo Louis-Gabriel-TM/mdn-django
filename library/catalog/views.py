@@ -43,7 +43,7 @@ def renew_book_librarian(request, pk):
         form = RenewBookModelForm(request.POST)
 
         if form.is_valid():
-            book_instance.due_back = form.cleaned_data['renewal_date']
+            book_instance.due_back = form.cleaned_data['due_back']
             book_instance.save()
 
             return HttpResponseRedirect(reverse('all_borrowed'))
